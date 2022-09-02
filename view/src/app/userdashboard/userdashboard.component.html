@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row">
+      <ng-container *ngFor="let item of propertys">
+        <div class="card" style="width: 18rem;padding-top: 5px;">
+            <img class="card-img-top" src="assets/1.webp" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{item.pid}}</h5>
+              <p class="card-text">{{item.name}}</p>
+              <!-- <p class="card-text">{{item.location}}</p> -->
+              <button  class="btn btn-primary" (click)="reserve(item.pid)">Reserve</button>
+            </div>
+          </div>
+
+          
+      </ng-container>
+    </div>
+  </div>
+  

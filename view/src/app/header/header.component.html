@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="home"><h1>RENT-A-PLACE</h1></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="search">
+       
+    </div>
+        
+<div class="col">
+    <br/>
+    <div ngbDropdown>
+      <button class="btn btn-success" id="gfg" 
+             routerLink="login" >Login</button>
+      
+    </div>
+  </div>
+
+  <div class="col1">
+    <br/>
+    <div ngbDropdown>
+      <button class="btn btn-warning" id="gfg" 
+              ngbDropdownToggle>Register</button>
+      <div ngbDropdownMenu="gfg">
+        <a ngbDropdownItem routerLink="ownersignup">As Owner</a>
+        <a ngbDropdownItem routerLink="signup">As User</a>
+        
+      </div>
+    </div>
+  </div>
+    </div>
+</nav>

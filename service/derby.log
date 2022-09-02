@@ -1,0 +1,16 @@
+----------------------------------------------------------------
+Thu Sep 01 13:38:51 IST 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0182-f818-7fe8-00000462a8f0 
+on database directory memory:C:\Users\lenovo\Desktop\Wipro\Training\capstone_project_2\rentaplace_service\80a1310b-207f-48da-a7a4-8af024e3efc9 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@659e0bfd 
+Loaded from file:/C:/Users/lenovo/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=16.0.2+7-67
+user.dir=C:\Users\lenovo\Desktop\Wipro\Training\capstone_project_2\rentaplace_service
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Thu Sep 01 13:39:31 IST 2022:
+Shutting down instance a816c00e-0182-f818-7fe8-00000462a8f0 on database directory memory:C:\Users\lenovo\Desktop\Wipro\Training\capstone_project_2\rentaplace_service\80a1310b-207f-48da-a7a4-8af024e3efc9 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@659e0bfd 

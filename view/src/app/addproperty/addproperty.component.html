@@ -1,0 +1,75 @@
+
+<div class="container">
+    <h2>Add New Property</h2>
+<form [formGroup]="propertyForm" (ngSubmit)="Add()">
+<div class="form-group">
+    <label for="name">Name of the Property</label><br />
+    <input type="text" class="form-control" placeholder="Enter Your property name" formControlName="name" id="name"
+        name="name" />
+
+</div>
+
+<div class="form-group">
+    <label for="type">Type of Property</label><br />
+    <select class="form-control"  formControlName="type" id="type"
+        name="type">
+
+        <option value="flat">Flat</option>
+        <option value="apartment">Apartment</option>
+        <option value="villas">Villas</option>
+        <option value="others">Others</option>
+
+    </select>
+
+
+</div>
+
+
+<!-- <div class="form-group" formControlName="features" id="features" name="features">
+  <fieldset >
+      <legend>Please select one of the features</legend>
+      <input type="radio" name="pool" formControlName="features" id="pool" value="pool" /><label for="pool">Pool</label><br />
+      <input type="radio" name="pool facing" formControlName="features" id="pool facing" value="pool facing" /><label for="pool facing">Pool
+          Facing</label><br />
+      <input type="radio" name="beach" formControlName="features" id="beach" value="beach" /><label for="beach">Beach</label><br />
+      <input type="radio" name="type" formControlName="features" id="beach facing" value="beach facing" /><label for="beach facing">Beach
+          Facing</label><br />
+      <input type="radio" name="type" formControlName="features" id="garden" value="garden" /><label for="garden">Garden</label><br />
+      <input type="radio" name="type" formControlName="features" id="garden facing" value="garden facing" /><label for="garden facing">Garden
+          Facing</label><br />
+  </fieldset>
+</div> -->
+
+
+
+<div class="form-group">
+    <label for="description">Property Description</label><br />
+    <textarea type="text" class="form-control" placeholder="Enter Your property describtion"
+        formControlName="description" id="description" name="description"></textarea>
+
+</div>
+<div class="form-group">
+    <label for="phone">Owner Phone</label><br />
+    <input type="number" class="form-control" formControlName="phone" placeholder="Enter your phone" id="phone"
+        name="phone" />
+</div>
+
+<div class="form-group">
+    <label for="price">Property Price</label><br />
+    <input type="number" class="form-control" formControlName="price" placeholder="Enter your property price" id="price"
+        name="price" />
+</div>
+
+
+
+<div class="form-group">
+    <label for="location">Property Location</label><br />
+    <input type="text" class="form-control" formControlName="location" placeholder="Enter your property Location" id="location"
+        name="location" />
+</div>
+<div style="margin-top: .5rem;">
+
+<button class="btn btn-primary">Submit</button>
+</div>
+</form>
+</div>

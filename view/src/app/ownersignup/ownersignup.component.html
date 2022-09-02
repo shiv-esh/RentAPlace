@@ -1,0 +1,50 @@
+<div class="reg col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+ <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+      <br />
+      <h3>Owner Registration </h3>
+      <br />
+      <div class="mb-3">
+        <label for="name">Full name</label><br />
+        <input type="text" class="form-control" formControlName="name" id="text" placeholder="Enter your name"
+          name="name" />
+      </div>
+      <div class="mb-3">
+        <label for="username">Username </label><br />
+        <input type="text" class="form-control" formControlName="username" placeholder="Enter your username" id="username"
+          name="username" />
+  
+      </div>
+     
+  
+      <div class="mb-3">
+        <label for="email">Owner Email ID </label><br />
+        <input type="text" class="form-control" formControlName="email" placeholder="Enter your email" id="email"
+          name="email" />
+  
+      </div>
+      <div class="mb-3">
+        <label for="password">Owner Password </label><br />
+        <input type="password" class="form-control" formControlName="password" id="password"
+          placeholder="Enter your password" name="password" />
+  
+      </div>
+  
+  
+  
+  
+      <div class="mb-3">
+        <label for="phone">Owner phone</label><br />
+        <input type="number" class="form-control" formControlName="phone" placeholder="Enter your phone" id="phone"
+          name="phone" />
+      </div>
+  
+      <p>
+        <button class="btn btn-primary" type="submit">Register Now As a Owner</button>
+      </p>
+      <p>
+        Already Registered? <a routerLink="/login"> Click here to Login</a><br />
+      </p>
+    </form>
+  </div>
+  
+  <br />
