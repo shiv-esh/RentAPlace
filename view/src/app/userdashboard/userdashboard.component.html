@@ -1,18 +1,59 @@
-<div class="container">
-    <div class="row">
-      <ng-container *ngFor="let item of propertys">
-        <div class="card" style="width: 18rem;padding-top: 5px;">
-            <img class="card-img-top" src="assets/1.webp" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">{{item.pid}}</h5>
-              <p class="card-text">{{item.name}}</p>
-              <!-- <p class="card-text">{{item.location}}</p> -->
-              <button  class="btn btn-primary" (click)="reserve(item.pid)">Reserve</button>
-            </div>
-          </div>
-
-          
-      </ng-container>
-    </div>
-  </div>
+<div class="searchcontainer">
   
+<div  style="float: left; width:20%;padding: 1rem;"class="input-group  col-sm-12">
+  <label for="checkin"><h5>CheckIn: </h5></label>
+  <input class="form-control" placeholder="yyyy-mm-dd" name="checkin" [(ngModel)]="checkin" ngbDatepicker
+      #d="ngbDatepicker">
+  <div class="input-group-append">
+      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i>
+              <fa-icon [icon]="faCalender"></fa-icon>
+          </i></button>
+  </div>
+</div>
+
+<div style="float: left; width:20%;padding: 1rem;" class="input-group  col-sm-12">
+  <label for="checkout"><h5>CheckOut: </h5> </label>
+  <input class="form-control" placeholder="yyyy-mm-dd" name="checkout" [(ngModel)]="checkout"
+      ngbDatepicker #d1="ngbDatepicker">
+  <div class="input-group-append">
+      <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i>
+              <fa-icon [icon]="faCalender"></fa-icon>
+          </i></button>
+  </div>
+</div>
+<div style="display:flex;float: left; width:35%;padding: 1rem;">
+  <input class="form-control me-2" type="search" [(ngModel)]="searchText"
+    placeholder="Search By Location, Type, Features" aria-label="Search">
+  <button class="btn btn-outline-success" type="submit" (click)="search()">Search</button>
+</div>
+</div>
+
+<div class="center">
+
+
+
+</div>
+<div class="container">
+  <div class="row">
+    <ng-container *ngFor="let item of propertys | filter : searchText">
+      <div class="card" style="width: 20rem;padding-top: 5px;">
+        <div *ngIf="item.returnedImage!=null">
+          <img  class="card-img-top" [src]="item.returnedImage" alt="Card image cap">
+        </div>
+
+
+        <h5>{{item.name}}</h5>
+        <p class="card-text"><strong>{{item.location}}</strong></p>
+        <p class="card-text">Type <strong>{{item.type}}</strong></p>
+        <p class="card-text">Features <strong>{{item.features}}</strong></p>
+
+        <p class="card-text"> <strong>₹{{item.price}}</strong>/night</p>
+        <p> <button class="btn btn-primary" (click)="viewProperty(item.pid)">View Property</button></p>
+      </div>
+      
+
+
+
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+
+<div class="center">
+    <h3>Messages </h3>
+    <div>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Sender</th>
+            <th scope="col">Message</th>
+            <th scope="col">Reply</th>
+            <th scope="col">Send</th>
+           
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of messages;let i =index">
+          <tr>
+            <th scope="row">{{i+1}}</th>
+            <td *ngIf="item.sid==item.uid">{{item.username}}</td>
+            <td *ngIf="item.sid!=item.uid">{{item.ownername}}</td>
+            <td>{{item.message}}</td>
+            <td *ngIf ="item.sid!=item.oid">
+              <form [formGroup]="messageForm">
+                <div class="mb-3">
+                   
+                    <input style="width: 30%;"  type="text"  placeholder="{{item.price}}"
+                      id="price" name="price" formControlName="message"/>
+             
+                  </div>
+                </form>
+            </td>
+            <td *ngIf ="item.sid!=item.oid"><button class="btn btn-warning" (click)="send(item.pid,item.uid,item.username)">Reply </button></td>
+           
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+</div>

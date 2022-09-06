@@ -1,0 +1,18 @@
+.center{margin: auto;
+    width: 50%;
+    /* border: 3px solid green; */
+    padding: 10px;
+  }
+  .container {
+    width: 60%;
+    margin: 2rem auto; 
+  }
+  
+  .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 40%;
+    padding: 5px;
+  }

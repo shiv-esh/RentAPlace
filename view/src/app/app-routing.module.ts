@@ -6,6 +6,9 @@ import { OwnersignupComponent } from './ownersignup/ownersignup.component';
 import { SignupComponent } from './signup/signup.component';
 import { OwnerdashboardComponent } from './ownerdashboard/ownerdashboard.component';
 import { UserdashboardComponent } from './userdashboard/userdashboard.component';
+import { PropertyComponent } from './property/property.component';
+import { EmailsComponent } from './emails/emails.component';
+import { MessagesComponent } from './messages/messages.component';
 const routes: Routes = [
  
   {
@@ -37,6 +40,18 @@ const routes: Routes = [
 {
   path: 'userdashboard',
   component: UserdashboardComponent
+},
+{
+  path: 'property',
+  component: PropertyComponent
+},
+{
+  path: 'messages',
+  component: MessagesComponent
+},
+{
+  path: 'email',
+  component: EmailsComponent
 }
 ]
 

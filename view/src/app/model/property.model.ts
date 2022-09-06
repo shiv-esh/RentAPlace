@@ -1,21 +1,21 @@
-export interface Property {
-    pid:number,
+export class Property {
+    pid:any;
        
-    name:string,
+    name:any;
        
-    location:string ,
+    location:any ;
        
-    features:string,
+    features:any;
        
-     type:string,
+     type:any;
          
-     description:string,
+     description:any;
     
-     phone:string,
+     phone:any;
        
-     owner_id:number,
+     owner_id:any;
        
-    ownername:string,
+    ownername:any;
        
-    price:number
+    price:any
    }

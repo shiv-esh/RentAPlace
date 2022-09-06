@@ -1,0 +1,98 @@
+<div class="center">
+    <div  class="row" >
+        <div class="column" *ngFor="let img of images">
+          <img [src]="img" alt="img1" style="width:100%">
+        </div>
+    </div>
+
+        <!-- <div *ngIf="property.returnedImage!=null"class="column">
+          <img [src]="property.returnedImage1" alt="img2" style="width:100%">
+        </div>
+        <div *ngIf="property.returnedImage!=null"class="column">
+          <img [src]="property.returnedImage2" alt="img3" style="width:100%">
+        </div>
+        <div *ngIf="property.returnedImage!=null"class="column">
+            <img [src]="property.returnedImage3" alt="img4" style="width:100%">
+          </div>
+      </div> -->
+    <!-- <div class="card" style="width: 18rem;padding-top: 5px;">
+        <div *ngIf="property.returnedImage!=null">
+            <img class="card-img-top" [src]="property.returnedImage" alt="Card image cap">
+        </div>
+    </div> -->
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h2>{{property.name}}</h2>
+        </li>
+        <li class="list-group-item"><strong>Location: </strong> {{property.location}}</li>
+        <li class="list-group-item"><strong>Features: </strong> {{property.features}}</li>
+        <li class="list-group-item"><strong>Type: </strong> {{property.type}}</li>
+        <li class="list-group-item"><strong>Ownername: </strong>{{property.ownername}}</li>
+        <!-- <li class="list-group-item">Rating {{property.rating}}</li> -->
+        <li class="list-group-item">
+            <div class="input-group  col-sm-12">
+                <label for="checkin"><strong>CheckIn: </strong></label>
+                <input class="form-control" placeholder="yyyy-mm-dd" name="checkin" [(ngModel)]="checkin" ngbDatepicker
+                    #d="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i>
+                            <fa-icon [icon]="faCalender"></fa-icon>
+                        </i></button>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="input-group  col-sm-12">
+                <label for="checkout"><strong>CheckOut: </strong> </label>
+                <input class="form-control" placeholder="yyyy-mm-dd" name="checkout" [(ngModel)]="checkout"
+                    ngbDatepicker #d1="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i>
+                            <fa-icon [icon]="faCalender"></fa-icon>
+                        </i></button>
+                </div>
+            </div>
+        </li>
+
+
+
+    </ul>
+    <div>
+        <button class="btn btn-primary" (click)="reserve(property.pid)">Reserve</button>
+    </div>
+
+<div>
+    <h3>Messages </h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Sender Name</th>
+                <th scope="col">Message</th>
+
+
+            </tr>
+        </thead>
+        <tbody *ngFor="let item of messages">
+            <tr>
+                <th scope="row" *ngIf="item.sid==item.oid">{{item.ownername}}</th>
+                <th scope="row" *ngIf="item.sid!=item.oid">{{item.username}}</th>
+                <td>{{item.message}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <div >
+        <form [formGroup]="messageForm" (ngSubmit)="send()">
+
+            <div class="form-group">
+                <label for="message"><h5>Send Message To Owner</h5>
+                <textarea  type="text" class="form-control" placeholder="Enter your message" formControlName="message"
+                    id="message" name="message" ></textarea>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+</div>

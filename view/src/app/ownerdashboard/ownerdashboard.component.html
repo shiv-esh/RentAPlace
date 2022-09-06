@@ -1,4 +1,77 @@
 <div class="center">
 <h3>Owner Dashboard</h3>
 <button class="btn btn-success"routerLink="/addproperty" >Add New Property</button>
+&nbsp;
+<button class="btn btn-success"routerLink="/email" >Emails</button>
+
 </div>
+
+<div class="center">
+<h3>My Properties</h3>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Property ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Price</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of propertyList">
+          <tr>
+            <th scope="row">{{item.pid}}</th>
+            <td>{{item.name}}</td>
+            <td>{{item.location}}</td>
+            <td>
+              <form [formGroup]="priceUpdate">
+                <div class="mb-3">
+                   
+                    <input style="width: 30%;"  type="text"  placeholder="{{item.price}}"
+                      id="price" name="price" formControlName="price"/>
+             
+                  </div>
+                </form>
+            </td>
+            <td><button class="btn btn-warning" (click)="updatePrice(item.pid)">Update </button></td>
+            <td><button class="btn btn-danger" (click)="deleteProperty(item.pid)">X </button></td>
+            <td><button class="btn btn-primary"(click)="viewMessages(item.pid)" >Messages</button></td>
+          </tr>
+          
+        </tbody>
+      </table>
+</div>
+<div class="center">
+  <h3>Booking Requests</h3>
+      <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Booking ID</th>
+              <th scope="col">Property Name</th>
+              <th scope="col">User ID</th>
+              <th scope="col">CheckIn</th>
+              <th scope="col">Check Out</th>
+              <th scope="col">Booking Status</th>
+              <th scope="col">Approve</th>
+              <th scope="col">Decline</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of bookings">
+            <tr>
+              <th scope="row">{{item.bid}}</th>
+              <td>{{item.pname}}</td>
+              <td>{{item.user_id}}</td>
+              <td>{{item.checkin}}</td>
+                <td>{{item.checkout}}</td>
+                <td>{{item.status}}</td>
+              <td><button class="btn btn-success" (click)="approveBooking(item.bid)">Approve </button></td>
+              <td><button class="btn btn-danger" (click)="disapproveBooking(item.bid)" >Decline </button></td>
+  
+            </tr>
+            
+          </tbody>
+        </table>
+  </div>
+  
+  

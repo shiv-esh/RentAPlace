@@ -1,9 +1,13 @@
-export interface Booking{
-     pid:number,
+ export  class Booking{
+	pid:any;
+	bid:any;
+     pname:any;
 
-	user_id:number,
+	user_id:any;
 
-	 checkin:Date,
+	 checkin:any;
 
-	checkout:Date
+	checkout:any;
+	status:any
+	
 }
