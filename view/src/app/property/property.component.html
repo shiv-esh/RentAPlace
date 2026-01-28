@@ -1,98 +1,119 @@
-<div class="center">
-    <div  class="row" >
-        <div class="column" *ngFor="let img of images">
-          <img [src]="img" alt="img1" style="width:100%">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+        <!-- Image Gallery -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 bg-gray-100 p-2">
+            <div *ngFor="let img of images" class="aspect-[4/3] overflow-hidden rounded-xl">
+                <img [src]="img" class="object-cover w-full h-full hover:scale-105 transition-transform duration-500"
+                    alt="Property">
+            </div>
+            <div *ngIf="images.length === 0" class="col-span-full h-64 flex items-center justify-center text-gray-400">
+                No images available
+            </div>
         </div>
-    </div>
 
-        <!-- <div *ngIf="property.returnedImage!=null"class="column">
-          <img [src]="property.returnedImage1" alt="img2" style="width:100%">
-        </div>
-        <div *ngIf="property.returnedImage!=null"class="column">
-          <img [src]="property.returnedImage2" alt="img3" style="width:100%">
-        </div>
-        <div *ngIf="property.returnedImage!=null"class="column">
-            <img [src]="property.returnedImage3" alt="img4" style="width:100%">
-          </div>
-      </div> -->
-    <!-- <div class="card" style="width: 18rem;padding-top: 5px;">
-        <div *ngIf="property.returnedImage!=null">
-            <img class="card-img-top" [src]="property.returnedImage" alt="Card image cap">
-        </div>
-    </div> -->
-    <ul class="list-group">
-        <li class="list-group-item">
-            <h2>{{property.name}}</h2>
-        </li>
-        <li class="list-group-item"><strong>Location: </strong> {{property.location}}</li>
-        <li class="list-group-item"><strong>Features: </strong> {{property.features}}</li>
-        <li class="list-group-item"><strong>Type: </strong> {{property.type}}</li>
-        <li class="list-group-item"><strong>Ownername: </strong>{{property.ownername}}</li>
-        <!-- <li class="list-group-item">Rating {{property.rating}}</li> -->
-        <li class="list-group-item">
-            <div class="input-group  col-sm-12">
-                <label for="checkin"><strong>CheckIn: </strong></label>
-                <input class="form-control" placeholder="yyyy-mm-dd" name="checkin" [(ngModel)]="checkin" ngbDatepicker
-                    #d="ngbDatepicker">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i>
-                            <fa-icon [icon]="faCalender"></fa-icon>
-                        </i></button>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 p-8">
+            <!-- Property Info -->
+            <div class="lg:col-span-2 space-y-8">
+                <div>
+                    <h2 class="text-4xl font-extrabold text-gray-900 mb-4">{{property.name}}</h2>
+                    <div class="flex items-center text-gray-600 space-x-4">
+                        <span class="flex items-center">
+                            <svg class="h-5 w-5 text-brand mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            </svg>
+                            {{property.location}}
+                        </span>
+                        <span
+                            class="bg-gray-100 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-gray-700">
+                            {{property.type}}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                    <h3 class="font-bold text-gray-900 mb-2">Features</h3>
+                    <p class="text-gray-600">{{property.features}}</p>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-gray-900">Owner</h3>
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="h-12 w-12 rounded-full bg-brand-light flex items-center justify-center text-white font-bold text-xl">
+                            {{property.ownername?.charAt(0)}}
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-900">{{property.ownername}}</div>
+                            <div class="text-sm text-gray-500">Verified Host</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Section -->
+                <div class="space-y-6 pt-10 border-t">
+                    <h3 class="text-2xl font-bold text-gray-900">Messages</h3>
+                    <div class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                        <div *ngFor="let item of messages"
+                            [ngClass]="item.sid == item.oid ? 'flex-row' : 'flex-row-reverse'"
+                            class="flex items-start gap-3">
+                            <div [ngClass]="item.sid == item.oid ? 'bg-gray-100 text-gray-800' : 'bg-brand text-white'"
+                                class="px-4 py-2 rounded-2xl max-w-[80%] shadow-sm">
+                                <div class="text-[10px] font-bold uppercase opacity-70 mb-1">
+                                    {{item.sid == item.oid ? item.ownername : 'You'}}
+                                </div>
+                                <div class="text-sm">{{item.message}}</div>
+                            </div>
+                        </div>
+                        <div *ngIf="messages.length === 0"
+                            class="text-center py-10 bg-gray-50 rounded-2xl border-2 border-dashed text-gray-400 italic">
+                            No messages yet. Ask the owner something!
+                        </div>
+                    </div>
+
+                    <form [formGroup]="messageForm" (ngSubmit)="send()" class="flex gap-4">
+                        <input type="text" formControlName="message" placeholder="Ask a question..."
+                            class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-brand focus:border-brand outline-none transition-all shadow-sm">
+                        <button type="submit"
+                            class="bg-gray-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-brand transition-all shadow-lg active:scale-95">
+                            Send
+                        </button>
+                    </form>
                 </div>
             </div>
-        </li>
-        <li class="list-group-item">
-            <div class="input-group  col-sm-12">
-                <label for="checkout"><strong>CheckOut: </strong> </label>
-                <input class="form-control" placeholder="yyyy-mm-dd" name="checkout" [(ngModel)]="checkout"
-                    ngbDatepicker #d1="ngbDatepicker">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i>
-                            <fa-icon [icon]="faCalender"></fa-icon>
-                        </i></button>
+
+            <!-- Booking Card -->
+            <div class="lg:sticky lg:top-24 h-fit">
+                <div class="bg-white border border-gray-100 rounded-3xl shadow-2xl p-8 space-y-6">
+                    <div class="text-3xl font-extrabold text-gray-900">
+                        ₹{{property.price}}<span class="text-base text-gray-500 font-normal"> / night</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 border border-gray-200 rounded-2xl overflow-hidden">
+                            <div class="p-3 border-r border-gray-200">
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase">Check-in</label>
+                                <input class="w-full text-sm font-medium outline-none bg-transparent"
+                                    placeholder="yyyy-mm-dd" name="checkin" [(ngModel)]="checkin" ngbDatepicker
+                                    #d="ngbDatepicker" (click)="d.toggle()">
+                            </div>
+                            <div class="p-3">
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase">Check-out</label>
+                                <input class="w-full text-sm font-medium outline-none bg-transparent"
+                                    placeholder="yyyy-mm-dd" name="checkout" [(ngModel)]="checkout" ngbDatepicker
+                                    #d1="ngbDatepicker" (click)="d1.toggle()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button (click)="reserve(property.pid)"
+                        class="w-full bg-brand text-white py-4 rounded-2xl font-bold text-lg hover:bg-brand-dark transition-all shadow-lg shadow-brand/30 active:scale-95">
+                        Reserve Now
+                    </button>
+
+                    <p class="text-center text-gray-400 text-xs mt-4">You won't be charged yet</p>
                 </div>
             </div>
-        </li>
-
-
-
-    </ul>
-    <div>
-        <button class="btn btn-primary" (click)="reserve(property.pid)">Reserve</button>
+        </div>
     </div>
-
-<div>
-    <h3>Messages </h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Sender Name</th>
-                <th scope="col">Message</th>
-
-
-            </tr>
-        </thead>
-        <tbody *ngFor="let item of messages">
-            <tr>
-                <th scope="row" *ngIf="item.sid==item.oid">{{item.ownername}}</th>
-                <th scope="row" *ngIf="item.sid!=item.oid">{{item.username}}</th>
-                <td>{{item.message}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-    <div >
-        <form [formGroup]="messageForm" (ngSubmit)="send()">
-
-            <div class="form-group">
-                <label for="message"><h5>Send Message To Owner</h5>
-                <textarea  type="text" class="form-control" placeholder="Enter your message" formControlName="message"
-                    id="message" name="message" ></textarea>
-                </label>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-
 </div>

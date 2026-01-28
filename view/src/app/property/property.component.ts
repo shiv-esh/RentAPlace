@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Property } from '../model/property.model';
 import { ApiService } from '../Service/api.service';
 
@@ -17,8 +17,8 @@ export class PropertyComponent implements OnInit {
   images: any = []
   messageForm!: FormGroup
   faCalender = faCalendar
-  checkin!: NgbDate
-  checkout!: NgbDate
+  checkin!: NgbDateStruct
+  checkout!: NgbDateStruct
   checkInDate!: Date
   checkOutDate!: Date
   bookingdto = {
@@ -39,43 +39,35 @@ export class PropertyComponent implements OnInit {
       username: [''],
       oid: [''],
       ownername: [''],
-      sid:['']
+      sid: ['']
 
 
     });
 
-   }
+  }
 
   ngOnInit(): void {
     this.api.propertyView$
       .subscribe(res => {
-        if (res.returnedImage != null) {
-          //console.log(res.returnedImage);
-          this.images.push(this.convertImage(
-            res.returnedImage
-          ));
+        // Convert image URLs to full URLs
+        if (res.imageUrl != null) {
+          this.images.push(this.convertImageUrl(res.imageUrl));
         }
-        if (res.returnedImage1 != null) {
-          this.images.push(this.convertImage(
-            res.returnedImage1
-          ));
+        if (res.imageUrl1 != null) {
+          this.images.push(this.convertImageUrl(res.imageUrl1));
         }
-        if (res.returnedImage2 != null) {
-          this.images.push(this.convertImage(
-            res.returnedImage2
-          ));
+        if (res.imageUrl2 != null) {
+          this.images.push(this.convertImageUrl(res.imageUrl2));
         }
-        if (res.returnedImage3 != null) {
-          this.images.push(this.convertImage(
-            res.returnedImage3
-          ));
+        if (res.imageUrl3 != null) {
+          this.images.push(this.convertImageUrl(res.imageUrl3));
         }
         this.property = res
         this.getMessages(res.pid, this.api.getuserid())
         console.log(this.property.returnedImage)
 
 
-        
+
 
       })
 
@@ -84,19 +76,25 @@ export class PropertyComponent implements OnInit {
   onSubmit() {
     console.log(this.messageForm.value.message)
   }
-  convertImage(img: any) {
-    return "data:image/jpeg;base64," + img;
+
+  // Convert image URL to full URL with backend server
+  convertImageUrl(url: string | null): string | null {
+    if (!url) return null;
+    // If it's already a full URL (starts with http), return as is
+    if (url.startsWith('http')) return url;
+    // Otherwise, prepend the backend URL
+    return 'http://localhost:8080' + url;
   }
   reserve(pid: number) {
     this.bookingdto.user_id = this.api.getuserid()
     this.checkInDate = new Date(
       this.checkin.year,
-      this.checkin.month-1,
+      this.checkin.month - 1,
       this.checkin.day
     )
     this.checkOutDate = new Date(
       this.checkout.year,
-      this.checkout.month-1,
+      this.checkout.month - 1,
       this.checkout.day
     )
 
@@ -133,7 +131,7 @@ export class PropertyComponent implements OnInit {
       username: this.api.getusername(),
       oid: this.property.owner_id,
       ownername: "owner1",
-      sid:this.api.getuserid()
+      sid: this.api.getuserid()
     }).subscribe(
       (res) => {
         console.log(res);

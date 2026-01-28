@@ -1,59 +1,111 @@
-<div class="searchcontainer">
-  
-<div  style="float: left; width:20%;padding: 1rem;"class="input-group  col-sm-12">
-  <label for="checkin"><h5>CheckIn: </h5></label>
-  <input class="form-control" placeholder="yyyy-mm-dd" name="checkin" [(ngModel)]="checkin" ngbDatepicker
-      #d="ngbDatepicker">
-  <div class="input-group-append">
-      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i>
-              <fa-icon [icon]="faCalender"></fa-icon>
-          </i></button>
+<div class="bg-white border-b border-gray-200 sticky top-16 z-40 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex flex-col lg:flex-row lg:items-end space-y-4 lg:space-y-0 lg:space-x-4">
+      <!-- CheckIn -->
+      <div class="flex-1">
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Check-in</label>
+        <div class="relative">
+          <input
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-brand focus:border-brand transition-all text-sm outline-none"
+            placeholder="yyyy-mm-dd" name="checkin" [(ngModel)]="checkin" ngbDatepicker #d="ngbDatepicker">
+          <button class="absolute left-3 top-2 text-gray-400" (click)="d.toggle()" type="button">
+            <fa-icon [icon]="faCalender"></fa-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- CheckOut -->
+      <div class="flex-1">
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Check-out</label>
+        <div class="relative">
+          <input
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-brand focus:border-brand transition-all text-sm outline-none"
+            placeholder="yyyy-mm-dd" name="checkout" [(ngModel)]="checkout" ngbDatepicker #d1="ngbDatepicker">
+          <button class="absolute left-3 top-2 text-gray-400" (click)="d1.toggle()" type="button">
+            <fa-icon [icon]="faCalender"></fa-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="flex-[2]">
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Search Destinations</label>
+        <div class="flex space-x-2">
+          <div class="relative flex-1">
+            <span class="absolute left-3 top-2.5 text-gray-400">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </span>
+            <input
+              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-brand focus:border-brand transition-all text-sm outline-none"
+              type="search" [(ngModel)]="searchText" placeholder="Location, Type, Features..." aria-label="Search">
+          </div>
+          <button
+            class="bg-brand text-white px-8 py-2 rounded-xl font-bold hover:bg-brand-dark transition-all shadow-md active:scale-95 whitespace-nowrap"
+            type="submit" (click)="search()">
+            Search Now
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div style="float: left; width:20%;padding: 1rem;" class="input-group  col-sm-12">
-  <label for="checkout"><h5>CheckOut: </h5> </label>
-  <input class="form-control" placeholder="yyyy-mm-dd" name="checkout" [(ngModel)]="checkout"
-      ngbDatepicker #d1="ngbDatepicker">
-  <div class="input-group-append">
-      <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i>
-              <fa-icon [icon]="faCalender"></fa-icon>
-          </i></button>
-  </div>
-</div>
-<div style="display:flex;float: left; width:35%;padding: 1rem;">
-  <input class="form-control me-2" type="search" [(ngModel)]="searchText"
-    placeholder="Search By Location, Type, Features" aria-label="Search">
-  <button class="btn btn-outline-success" type="submit" (click)="search()">Search</button>
-</div>
-</div>
-
-<div class="center">
-
-
-
-</div>
-<div class="container">
-  <div class="row">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
     <ng-container *ngFor="let item of propertys | filter : searchText">
-      <div class="card" style="width: 20rem;padding-top: 5px;">
-        <div *ngIf="item.returnedImage!=null">
-          <img  class="card-img-top" [src]="item.returnedImage" alt="Card image cap">
+      <div
+        class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full transform hover:-translate-y-1">
+        <!-- Image Container -->
+        <div class="relative aspect-[4/3] overflow-hidden">
+          <img *ngIf="item.returnedImage" [src]="item.returnedImage"
+            class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+            alt="Property image">
+          <div *ngIf="!item.returnedImage" class="w-full h-full bg-gray-100 flex items-center justify-center">
+            <svg class="h-12 w-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div
+            class="absolute top-4 right-4 bg-white/95 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-brand shadow-sm uppercase tracking-wider border border-brand/10">
+            {{item.type}}
+          </div>
         </div>
 
+        <!-- Content -->
+        <div class="p-5 flex flex-col flex-1">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="text-xl font-bold text-gray-900 group-hover:text-brand transition-colors leading-tight">
+              {{item.name}}</h3>
+          </div>
 
-        <h5>{{item.name}}</h5>
-        <p class="card-text"><strong>{{item.location}}</strong></p>
-        <p class="card-text">Type <strong>{{item.type}}</strong></p>
-        <p class="card-text">Features <strong>{{item.features}}</strong></p>
+          <div class="flex items-center text-gray-600 text-sm mb-3">
+            <svg class="h-4 w-4 mr-1 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            {{item.location}}
+          </div>
 
-        <p class="card-text"> <strong>₹{{item.price}}</strong>/night</p>
-        <p> <button class="btn btn-primary" (click)="viewProperty(item.pid)">View Property</button></p>
+          <p class="text-gray-500 text-sm mb-4 line-clamp-2">
+            <span class="font-medium text-gray-700">Features:</span> {{item.features}}
+          </p>
+
+          <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
+            <div class="text-lg font-extrabold text-brand">₹{{item.price}}<span
+                class="text-xs text-gray-500 font-normal">/night</span></div>
+            <button (click)="viewProperty(item.pid)"
+              class="bg-gray-900 text-white px-4 py-2 rounded-xl font-bold hover:bg-brand transition-all shadow-md active:scale-95">
+              View
+            </button>
+          </div>
+        </div>
       </div>
-      
-
-
-
     </ng-container>
   </div>
 </div>

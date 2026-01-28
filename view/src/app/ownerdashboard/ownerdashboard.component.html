@@ -1,77 +1,157 @@
-<div class="center">
-<h3>Owner Dashboard</h3>
-<button class="btn btn-success"routerLink="/addproperty" >Add New Property</button>
-&nbsp;
-<button class="btn btn-success"routerLink="/email" >Emails</button>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+  <!-- Header Section -->
+  <div
+    class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+    <div>
+      <h2 class="text-3xl font-extrabold text-gray-900">Owner Dashboard</h2>
+      <p class="text-gray-500 text-sm mt-1">Manage your properties and booking requests</p>
+    </div>
+    <div class="flex space-x-3">
+      <button routerLink="/email"
+        class="flex items-center space-x-2 bg-gray-100 text-gray-700 px-5 py-2.5 rounded-xl font-bold hover:bg-gray-200 transition-all">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <span>Emails</span>
+      </button>
+      <button routerLink="/addproperty"
+        class="flex items-center space-x-2 bg-brand text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-dark transition-all shadow-lg active:scale-95">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        <span>Add Property</span>
+      </button>
+    </div>
+  </div>
 
-</div>
-
-<div class="center">
-<h3>My Properties</h3>
-    <table class="table table-striped">
+  <!-- My Properties Section -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+      <h3 class="text-xl font-bold text-gray-800">My Properties</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
         <thead>
-          <tr>
-            <th scope="col">Property ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Location</th>
-            <th scope="col">Price</th>
-            <th scope="col">Update</th>
-            <th scope="col">Delete</th>
+          <tr class="text-gray-400 text-xs uppercase tracking-wider">
+            <th class="px-6 py-4 font-bold text-center">ID</th>
+            <th class="px-6 py-4 font-bold">Property Details</th>
+            <th class="px-6 py-4 font-bold">Price per Night</th>
+            <th class="px-6 py-4 font-bold text-center">Actions</th>
           </tr>
         </thead>
-        <tbody *ngFor="let item of propertyList">
-          <tr>
-            <th scope="row">{{item.pid}}</th>
-            <td>{{item.name}}</td>
-            <td>{{item.location}}</td>
-            <td>
-              <form [formGroup]="priceUpdate">
-                <div class="mb-3">
-                   
-                    <input style="width: 30%;"  type="text"  placeholder="{{item.price}}"
-                      id="price" name="price" formControlName="price"/>
-             
-                  </div>
-                </form>
+        <tbody class="divide-y divide-gray-50">
+          <tr *ngFor="let item of propertyList" class="hover:bg-gray-50/50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium text-gray-400 text-center">#{{item.pid}}</td>
+            <td class="px-6 py-4">
+              <div class="font-bold text-gray-900">{{item.name}}</div>
+              <div class="text-xs text-gray-500 flex items-center mt-0.5">
+                <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                </svg>
+                {{item.location}}
+              </div>
             </td>
-            <td><button class="btn btn-warning" (click)="updatePrice(item.pid)">Update </button></td>
-            <td><button class="btn btn-danger" (click)="deleteProperty(item.pid)">X </button></td>
-            <td><button class="btn btn-primary"(click)="viewMessages(item.pid)" >Messages</button></td>
+            <td class="px-6 py-4">
+              <form [formGroup]="priceUpdate" class="flex items-center space-x-2">
+                <div class="relative">
+                  <span class="absolute left-2 top-2 text-gray-400 text-xs">₹</span>
+                  <input type="text" [placeholder]="item.price" formControlName="price"
+                    class="w-24 pl-5 pr-2 py-1.5 border border-gray-200 rounded-lg text-sm focus:ring-1 focus:ring-brand outline-none">
+                </div>
+                <button (click)="updatePrice(item.pid)"
+                  class="p-1.5 text-orange-500 hover:bg-orange-50 rounded-lg transition-colors" title="Update Price">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </button>
+              </form>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex items-center justify-center space-x-2">
+                <button (click)="viewMessages(item.pid)"
+                  class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors">
+                  Messages
+                </button>
+                <button (click)="deleteProperty(item.pid)"
+                  class="bg-red-50 text-red-600 p-1.5 rounded-lg hover:bg-red-100 transition-colors">
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
+            </td>
           </tr>
-          
         </tbody>
       </table>
-</div>
-<div class="center">
-  <h3>Booking Requests</h3>
-      <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Booking ID</th>
-              <th scope="col">Property Name</th>
-              <th scope="col">User ID</th>
-              <th scope="col">CheckIn</th>
-              <th scope="col">Check Out</th>
-              <th scope="col">Booking Status</th>
-              <th scope="col">Approve</th>
-              <th scope="col">Decline</th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let item of bookings">
-            <tr>
-              <th scope="row">{{item.bid}}</th>
-              <td>{{item.pname}}</td>
-              <td>{{item.user_id}}</td>
-              <td>{{item.checkin}}</td>
-                <td>{{item.checkout}}</td>
-                <td>{{item.status}}</td>
-              <td><button class="btn btn-success" (click)="approveBooking(item.bid)">Approve </button></td>
-              <td><button class="btn btn-danger" (click)="disapproveBooking(item.bid)" >Decline </button></td>
-  
-            </tr>
-            
-          </tbody>
-        </table>
+    </div>
   </div>
-  
-  
+
+  <!-- Booking Requests Section -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+      <h3 class="text-xl font-bold text-gray-800">Booking Requests</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
+        <thead>
+          <tr class="text-gray-400 text-xs uppercase tracking-wider">
+            <th class="px-6 py-4 font-bold text-center">ID</th>
+            <th class="px-6 py-4 font-bold">Property & User</th>
+            <th class="px-6 py-4 font-bold text-center">Dates</th>
+            <th class="px-6 py-4 font-bold">Status</th>
+            <th class="px-6 py-4 font-bold text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+          <tr *ngFor="let item of bookings" class="hover:bg-gray-50/50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium text-gray-400 text-center">#{{item.bid}}</td>
+            <td class="px-6 py-4">
+              <div class="font-bold text-gray-900">{{item.pname}}</div>
+              <div class="text-xs text-gray-500 font-medium tracking-tight">User: #{{item.user_id}}</div>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-600 text-center">
+              <div class="flex flex-col items-center">
+                <span class="flex items-center space-x-1"><span class="text-[10px] text-gray-400 uppercase">In</span>
+                  <span class="font-medium">{{item.checkin}}</span></span>
+                <span class="flex items-center space-x-1"><span class="text-[10px] text-gray-400 uppercase">Out</span>
+                  <span class="font-medium">{{item.checkout}}</span></span>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <span [ngClass]="{
+                'bg-yellow-50 text-yellow-600': item.status === 'Pending',
+                'bg-green-50 text-green-600': item.status === 'Approved',
+                'bg-red-50 text-red-600': item.status === 'Declined'
+              }"
+                class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border border-current opacity-80">
+                {{item.status}}
+              </span>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex items-center justify-center space-x-2">
+                <button (click)="approveBooking(item.bid)"
+                  class="bg-green-600 text-white p-1.5 rounded-lg hover:bg-green-700 transition-all shadow-sm active:scale-95 group"
+                  title="Approve">
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </button>
+                <button (click)="disapproveBooking(item.bid)"
+                  class="bg-white border border-red-200 text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-all active:scale-95"
+                  title="Decline">
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

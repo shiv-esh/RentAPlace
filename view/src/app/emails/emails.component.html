@@ -1,26 +1,52 @@
-<div class="center">
-<table class="table" >
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">User ID</th>
-        <th scope="col">Sender Email ID</th>
-       
-        <th scope="col">Email</th>
-        <th scope="col">Property ID</th>
-        
-       
-      </tr>
-    </thead>
-    <tbody *ngFor="let item of emails;let i=index">
-      <tr>
-        <th scope="row">{{i+1}}</th>
-        <td>{{item.user_id}}</td>
-            <td>{{item.useremail}}</td>
-            <td>{{item.emailBody}}</td>
-            <td>{{item.pid}}</td>
-      </tr>
-      
-    </tbody>
-  </table>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+  <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+    <div>
+      <h2 class="text-3xl font-extrabold text-gray-900">Email Requests</h2>
+      <p class="text-gray-500 text-sm mt-1">Direct inquiries from interested travelers</p>
+    </div>
+    <div class="bg-brand/10 p-3 rounded-xl">
+      <svg class="h-8 w-8 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
+        <thead>
+          <tr class="text-gray-400 text-xs uppercase tracking-wider bg-gray-50/50">
+            <th class="px-6 py-4 font-bold text-center">#</th>
+            <th class="px-6 py-4 font-bold">User Details</th>
+            <th class="px-6 py-4 font-bold">Message Content</th>
+            <th class="px-6 py-4 font-bold text-center">Property Reference</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+          <tr *ngFor="let item of emails; let i=index" class="hover:bg-gray-50/50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium text-gray-400 text-center">{{i+1}}</td>
+            <td class="px-6 py-4">
+              <div class="font-bold text-gray-900">{{item.useremail}}</div>
+              <div class="text-xs text-gray-500">User ID: #{{item.user_id}}</div>
+            </td>
+            <td class="px-6 py-4">
+              <p class="text-sm text-gray-700 leading-relaxed max-w-lg">{{item.emailBody}}</p>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <span
+                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand/10 text-brand">
+                PID #{{item.pid}}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="emails.length === 0">
+            <td colspan="4" class="px-6 py-20 text-center text-gray-400 italic">
+              No emails received yet
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
