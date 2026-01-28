@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users", schema = "rent_a_place")
-public class User{
+@Table(name = "users")
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int user_id;
@@ -33,13 +33,10 @@ public class User{
 	@Column
 	private String password;
 
-
 	@Column
 	private String phone;
-	
+
 	@Column
 	private String role;
-
-	
 
 }

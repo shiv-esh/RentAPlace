@@ -52,17 +52,34 @@
 
                 <!-- Chat Section -->
                 <div class="space-y-6 pt-10 border-t">
-                    <h3 class="text-2xl font-bold text-gray-900">Messages</h3>
-                    <div class="space-y-4 max-h-96 overflow-y-auto pr-2">
-                        <div *ngFor="let item of messages"
-                            [ngClass]="item.sid == item.oid ? 'flex-row' : 'flex-row-reverse'"
-                            class="flex items-start gap-3">
-                            <div [ngClass]="item.sid == item.oid ? 'bg-gray-100 text-gray-800' : 'bg-brand text-white'"
-                                class="px-4 py-2 rounded-2xl max-w-[80%] shadow-sm">
-                                <div class="text-[10px] font-bold uppercase opacity-70 mb-1">
-                                    {{item.sid == item.oid ? item.ownername : 'You'}}
+                    <h3 class="text-2xl font-bold text-gray-900">Conversations</h3>
+                    <div class="space-y-4 max-h-96 overflow-y-auto pr-2 flex flex-col">
+                        <div *ngFor="let item of messages" class="w-full flex flex-col"
+                            [ngClass]="item.sid == item.uid ? 'items-end' : 'items-start'">
+
+                            <div class="px-2 mb-1">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                                    {{item.sid == item.uid ? 'You' : item.ownername}}
+                                </span>
+                            </div>
+
+                            <div class="flex items-end gap-2 max-w-[85%]">
+                                <!-- Owner Avatar (on left) -->
+                                <div *ngIf="item.sid != item.uid"
+                                    class="h-7 w-7 rounded-full bg-brand text-white flex items-center justify-center text-[10px] font-bold mb-1 shadow-sm flex-shrink-0">
+                                    {{item.ownername?.charAt(0) || 'O'}}
                                 </div>
-                                <div class="text-sm">{{item.message}}</div>
+
+                                <div class="px-4 py-2 rounded-2xl shadow-sm"
+                                    [ngClass]="item.sid == item.uid ? 'bg-blue-600 text-white rounded-br-none' : 'bg-gray-100 text-gray-800 rounded-bl-none border border-gray-200'">
+                                    <div class="text-sm leading-relaxed">{{item.message}}</div>
+                                </div>
+
+                                <!-- User Avatar (on right) -->
+                                <div *ngIf="item.sid == item.uid"
+                                    class="h-7 w-7 rounded-full bg-blue-500 text-white flex items-center justify-center text-[10px] font-bold mb-1 shadow-sm flex-shrink-0">
+                                    U
+                                </div>
                             </div>
                         </div>
                         <div *ngIf="messages.length === 0"
@@ -71,12 +88,18 @@
                         </div>
                     </div>
 
-                    <form [formGroup]="messageForm" (ngSubmit)="send()" class="flex gap-4">
-                        <input type="text" formControlName="message" placeholder="Ask a question..."
-                            class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-brand focus:border-brand outline-none transition-all shadow-sm">
+                    <form [formGroup]="messageForm" (ngSubmit)="send()" class="flex gap-3">
+                        <div class="flex-1 relative">
+                            <input type="text" formControlName="message" placeholder="Ask the host a question..."
+                                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand focus:border-transparent outline-none transition-all bg-white shadow-sm text-sm">
+                        </div>
                         <button type="submit"
-                            class="bg-gray-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-brand transition-all shadow-lg active:scale-95">
-                            Send
+                            class="bg-gray-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-brand transition-all shadow-lg active:scale-95 flex items-center gap-2">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                            </svg>
+                            <span>Send</span>
                         </button>
                     </form>
                 </div>

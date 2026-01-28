@@ -24,26 +24,25 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "emails", schema = "rent_a_place")
+@Table(name = "emails")
 public class Email {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	
+
 	@Column
 	private int user_id;
-	
+
 	@Column
-	private int owner_id ;
-	
+	private int owner_id;
+
 	@Column
 	private int pid;
-	
+
 	@Column
 	private String emailBody;
-	
-	@Column 
+
+	@Column
 	private String useremail;
-	
+
 }

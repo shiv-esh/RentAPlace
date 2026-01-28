@@ -1,19 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ApiService } from '../Service/api.service';
+import { interval, Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit {
-  messages:any=[]
-  messageForm:any
-  constructor(private api:ApiService,
-    private formBuilder:FormBuilder,
-    private http:HttpClient) { 
+export class MessagesComponent implements OnInit, OnDestroy {
+  messages: any = []
+  messageForm: any
+  private pollingSubscription?: Subscription;
+
+  constructor(private api: ApiService,
+    private formBuilder: FormBuilder,
+    private http: HttpClient) {
     this.messageForm = this.formBuilder.group({
       pid: [''],
       message: [''],
@@ -21,21 +24,45 @@ export class MessagesComponent implements OnInit {
       username: [''],
       oid: [''],
       ownername: [''],
-      sid:['']
+      sid: ['']
 
 
     });
   }
 
   ngOnInit(): void {
-    this.api.messageView$.subscribe(res=>{
-      this.messages=res;
-      console.log(this.messages)
-    })
+    // Initial load from observable
+    this._loadInitialMessages();
+
+    // Setup real-time polling (every 3 seconds)
+    this.pollingSubscription = interval(3000).pipe(
+      switchMap(() => this.http.get<any>("http://localhost:9090/chat/owner/".concat(`${this.api.getuserid()}`)))
+    ).subscribe(res => {
+      this.messages = res;
+    });
   }
-  send(pid:number,uid:number,username:string) {
+
+  private _loadInitialMessages() {
+    this.api.messageView$.subscribe(res => {
+      this.messages = res;
+      console.log(this.messages)
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+    }
+  }
+  send(pid: number, uid: number, username: string) {
     console.log("send")
     console.log(this.messageForm.value.message)
+
+    if (!this.messageForm.value.message || this.messageForm.value.message.trim() === '') {
+      alert("Please enter a message");
+      return;
+    }
+
     this.http.post<any>("http://localhost:9090/chat/send/", {
       pid: pid,
       message: this.messageForm?.value.message,
@@ -47,16 +74,27 @@ export class MessagesComponent implements OnInit {
     }).subscribe(
       (res) => {
         console.log(res);
-        alert("Message Sent");
+
+        // Clear the form
         this.messageForm?.reset();
-        // this.messages.splice(0)
-        this.ngOnInit()
-        // this.router.navigate(["ownerdashboard"]);
+
+        // Reload messages from server immediately
+        this.refreshMessages();
+
+        alert("Message sent successfully!");
       },
       (err) => {
-        alert("Couldn't send msg")
+        console.error(err);
+        alert("Couldn't send message. Please try again.");
       }
     );
+  }
+
+  refreshMessages() {
+    this.http.get<any>("http://localhost:9090/chat/owner/".concat(`${this.api.getuserid()}`))
+      .subscribe((messages) => {
+        this.messages = messages;
+      });
   }
 
 }

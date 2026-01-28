@@ -5,13 +5,15 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Property } from '../model/property.model';
 import { ApiService } from '../Service/api.service';
+import { interval, Subscription, switchMap, startWith } from 'rxjs';
+import { OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-property',
   templateUrl: './property.component.html',
   styleUrls: ['./property.component.css']
 })
-export class PropertyComponent implements OnInit {
+export class PropertyComponent implements OnInit, OnDestroy {
   pid!: number
   property: any = []
   images: any = []
@@ -30,6 +32,7 @@ export class PropertyComponent implements OnInit {
 
   }
   messages: any = []
+  private pollingSubscription?: Subscription;
 
   constructor(private formBuilder: FormBuilder, private api: ApiService, private http: HttpClient) {
     this.messageForm = this.formBuilder.group({
@@ -149,13 +152,27 @@ export class PropertyComponent implements OnInit {
 
   getMessages(pid: number, uid: number) {
     const req = `${pid},${uid}`
-    this.http.get<any>("http://localhost:9090/chat/get/".concat(req))
-      .subscribe(res => {
-        console.log("hello")
-        console.log(res);
-        this.messages = res;
-      })
 
+    // Stop previous polling if exists
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+    }
+
+    // Setup polling (every 3 seconds)
+    this.pollingSubscription = interval(3000)
+      .pipe(
+        startWith(0),
+        switchMap(() => this.http.get<any>("http://localhost:9090/chat/get/".concat(req)))
+      )
+      .subscribe(res => {
+        this.messages = res;
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+    }
   }
 
 }

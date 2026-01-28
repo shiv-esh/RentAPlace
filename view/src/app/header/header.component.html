@@ -43,9 +43,19 @@
           </div>
         </div>
 
-        <div *ngIf="isLoggedIn()" class="flex items-center">
+        <div *ngIf="isLoggedIn()" class="flex items-center space-x-6">
+          <div class="flex items-center space-x-3 text-white">
+            <div class="text-right">
+              <div class="text-sm font-bold opacity-100">{{getUserName()}}</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider opacity-70">{{getRole()}}</div>
+            </div>
+            <div
+              class="h-10 w-10 rounded-full bg-white text-brand flex items-center justify-center font-bold text-lg shadow-inner">
+              {{getUserName().charAt(0).toUpperCase()}}
+            </div>
+          </div>
           <button (click)="logout()" routerLink="login"
-            class="bg-white text-brand px-6 py-2 rounded-lg font-bold shadow-md hover:bg-gray-100 transition-all flex items-center space-x-2">
+            class="bg-white/10 text-white px-6 py-2 rounded-lg font-bold border border-white/20 hover:bg-white hover:text-brand transition-all flex items-center space-x-2">
             <span>Logout</span>
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

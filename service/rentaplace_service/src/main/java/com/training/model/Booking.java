@@ -27,28 +27,26 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "booking", schema = "rent_a_place")
+@Table(name = "booking")
 public class Booking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int booking_id;
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "pid", nullable = false)
-    private Property property;
-	
+	@JoinColumn(name = "pid", nullable = false)
+	private Property property;
+
 	@Column
 	private int user_id;
-	
+
 	@Column
 	private boolean status;
-	
-	@Column 
+
+	@Column
 	private Date checkin;
-	
-	@Column 
+
+	@Column
 	private Date checkout;
-	
-	
 
 }

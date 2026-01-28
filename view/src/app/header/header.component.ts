@@ -9,7 +9,7 @@ import { ApiService } from '../Service/api.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private api: ApiService,private route:Router) { }
+  constructor(private api: ApiService, private route: Router) { }
 
   ngOnInit(): void {
 
@@ -18,7 +18,15 @@ export class HeaderComponent implements OnInit {
     return this.api.login;
   }
 
-  logout(){
+  getUserName() {
+    return this.api.getusername();
+  }
+
+  getRole() {
+    return this.api.getRole();
+  }
+
+  logout() {
     this.api.logout()
   }
 

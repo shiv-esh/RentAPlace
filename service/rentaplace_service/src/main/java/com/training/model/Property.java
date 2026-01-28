@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,9 +21,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "property", schema = "rent_a_place")
+@Table(name = "property")
 public class Property {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int pid;
@@ -43,32 +42,31 @@ public class Property {
 
 	@Column
 	private String description;
-	
+
 	@Column
 	private String phone;
 
 	@Column
 	private int owner_id;
-	
-	@OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
-            mappedBy = "property")
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "property")
 	private Booking booking;
-//	@Column
-//	private int rating;
-	
+	// @Column
+	// private int rating;
+
 	@Column
 	private int price;
-	
-	@Lob
-	private byte[] image;
-	
-	@Lob
-	private byte[] image1;
-	@Lob
-	private byte[] image2;
-	@Lob
-	private byte[] image3;
-	
+
+	@Column(length = 500)
+	private String imageUrl;
+
+	@Column(length = 500)
+	private String imageUrl1;
+
+	@Column(length = 500)
+	private String imageUrl2;
+
+	@Column(length = 500)
+	private String imageUrl3;
 
 }

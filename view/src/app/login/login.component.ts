@@ -43,13 +43,14 @@ export class LoginComponent implements OnInit {
         this.api.setUserName(this.loginForm.value.username);
         this.api.setUserId(res.id)
         this.role = res.role;
-        this.api.setuserid(res.id);
+        this.api.setRole(res.role);
         this.api.setusername(this.loginForm.value.username)
-        this.api.login=true
-        if(this.role=="user")
-        {this.router.navigate(["userdashboard"])
-        console.log("user")}
-        else{
+        this.api.login = true
+        if (this.role == "user") {
+          this.router.navigate(["userdashboard"])
+          console.log("user")
+        }
+        else {
           console.log("owner")
           this.router.navigate(["ownerdashboard"]);
         }
