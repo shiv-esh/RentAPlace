@@ -1,0 +1,96 @@
+##############################
+# Java / Spring Boot
+##############################
+
+# Binaries
+*.class
+*.jar
+*.war
+*.ear
+
+# JVM & Logs
+hs_err_pid*
+replay_pid*
+*.log
+
+# Spring Boot dev artifacts
+spring.log
+
+##############################
+# Maven
+##############################
+service/ChatMicroService/target/
+service/rentaplace_service/target/
+.mvn/wrapper/maven-wrapper.jar
+
+##############################
+# Gradle
+##############################
+/build/
+.gradle/
+/out/
+!gradle-wrapper.jar
+
+##############################
+# IntelliJ IDEA
+##############################
+.idea/
+*.iml
+*.ipr
+*.iws
+
+##############################
+# Eclipse / STS
+##############################
+.project
+.classpath
+.settings/
+.springBeans
+
+##############################
+# VS Code
+##############################
+.vscode/
+
+##############################
+# OS Specific
+##############################
+.DS_Store
+Thumbs.db
+
+##############################
+# Angular / Frontend
+##############################
+view/node_modules/
+view/dist/
+view/build/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnpm-debug.log
+.angular/
+.angular-cache/
+.husky/
+
+##############################
+# Environment / Secrets
+##############################
+.env
+.env.local
+.env.*.local
+application.properties
+application.yml
+application-*.properties
+application-*.yml
+
+##############################
+# Docker / DevOps
+##############################
+/docker-compose.override.yml
+.pid
+
+*.jpg
+*.png
+*.jpeg
+*.webp
+*.txt

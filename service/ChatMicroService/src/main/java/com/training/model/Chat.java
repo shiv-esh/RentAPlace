@@ -1,33 +1,29 @@
 package com.training.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Document(collection = "chats")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Chat {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-	
+    @Id
+    private String id;
+
     private int pid;
     private String message;
-    
+
     private int uid;
     private String username;
     private int oid;
     private String ownername;
     private int sid;
-	
 
 }
